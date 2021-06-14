@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable prettier/prettier */
 
-const getDateStringAndTime = milliseconds => {
+export const getDateStringAndTime = milliseconds => {
     const date = new Date(milliseconds);
 
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} - ${date.toLocaleTimeString()}`;
@@ -26,6 +26,6 @@ export const getDayString = milliseconds => {
     } else if (dateTimeToChecked.getTime() === tomorrow.getTime()) {
         return "Tomorrow";
     } else {
-        return getDateStringAndTime(milliseconds);
+        return "Future";
     }
 };

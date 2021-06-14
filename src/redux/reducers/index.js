@@ -6,9 +6,8 @@ import { combineReducers } from 'redux';
 
 import toDoList from "./toDoList";
 import schedule from "./schedule";
-import toDos from "./toDos";
 import loading from "./loading";
 
-const rootReducder = combineReducers({ toDoList, schedule, loading, toDos });
+const rootReducder = combineReducers({ toDoList, schedule, loading });
 
 export default rootReducder;

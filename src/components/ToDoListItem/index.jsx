@@ -5,7 +5,7 @@
 import CheckBox from "@react-native-community/checkbox";
 import React, {useEffect, useState} from "react";
 import {ScrollView, StyleSheet, Text, View} from "react-native";
-import {getDayString} from "../../utils/common";
+import {getDayString, getDateStringAndTime} from "../../utils/common";
 
 function ToDoListItem({date, time, title}) {
   const [isChecked, setIsChecked] = useState(false);
@@ -22,7 +22,9 @@ function ToDoListItem({date, time, title}) {
         </View>
         <View style={styles.contentBody}>
           <Text style={styles.toDoDescription}>
-            {getDayString(date + time)}
+            {getDayString(date + time) === "Future"
+              ? getDateStringAndTime(date + time)
+              : getDayString(date + time)}
           </Text>
         </View>
       </View>

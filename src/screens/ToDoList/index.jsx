@@ -15,7 +15,6 @@ import ToDoListItem from "../../components/ToDoListItem";
 import {useCallback} from "react";
 import {connect} from "react-redux";
 import {actGetToDoList} from "../../redux/actions/toDoList";
-import {actGetToDosByToDoListId} from "../../redux/actions/toDo";
 import {getDayString} from "../../utils/common";
 import {
   AddToListIcon,
@@ -28,7 +27,30 @@ import {
   ListIcon,
 } from "./styled";
 
-function ToDoList({toDoList, toDos, actGetToDoList, actGetToDosByToDoListId}) {
+const lstSchedule = [
+  {
+    label: "Đã diễn ra",
+    value: "Outdated",
+  },
+  {
+    label: "Hôm qua",
+    value: "Yesterday",
+  },
+  {
+    label: "Hôm nay",
+    value: "Today",
+  },
+  {
+    label: "Ngày mai",
+    value: "Tomorrow",
+  },
+  {
+    label: "Sẽ diễn ra",
+    value: "Future",
+  },
+];
+
+function ToDoList({toDoList, actGetToDoList}) {
   const [selectedList, setSelectedList] = useState("");
   const [isShowModalCreateList, setIsShowModalCreateList] = useState(false);
 
@@ -40,7 +62,6 @@ function ToDoList({toDoList, toDos, actGetToDoList, actGetToDosByToDoListId}) {
     actGetToDoList(
       toDoList => toDoList.length > 0 && setSelectedList(toDoList[0].value),
     );
-    actGetToDosByToDoListId(selectedList);
   }, []);
 
   useEffect(() => {
@@ -48,10 +69,6 @@ function ToDoList({toDoList, toDos, actGetToDoList, actGetToDosByToDoListId}) {
       toDoList => toDoList.length > 0 && setSelectedList(toDoList[0].value),
     );
   }, []);
-
-  useEffect(() => {
-    actGetToDosByToDoListId(selectedList);
-  }, [selectedList]);
 
   return (
     <Container>
@@ -85,107 +102,28 @@ function ToDoList({toDoList, toDos, actGetToDoList, actGetToDosByToDoListId}) {
           refreshControl={
             <RefreshControl refreshing={false} onRefresh={refreshToDoList} />
           }>
-          {toDos.filter(
-            toDo => getDayString(toDo.date + toDo.time) === "Outdated",
-          ).length > 0 && (
-            <View>
-              <CategoryTitle>Đã diễn ra</CategoryTitle>
-              {toDos
-                .filter(
-                  toDo => getDayString(toDo.date + toDo.time) === "Outdated",
-                )
-                .map((toDo, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    activeOpacity={0.5}
-                    onPress={() => alert("xxxx")}>
-                    <ToDoListItem {...toDo} />
-                  </TouchableOpacity>
-                ))}
-            </View>
-          )}
-
-          {toDos.filter(
-            toDo => getDayString(toDo.date + toDo.time) === "Yesterday",
-          ).length > 0 && (
-            <View>
-              <CategoryTitle>Hôm qua</CategoryTitle>
-              {toDos
-                .filter(
-                  toDo => getDayString(toDo.date + toDo.time) === "Yesterday",
-                )
-                .map((toDo, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    activeOpacity={0.5}
-                    onPress={() => alert("xxxx")}>
-                    <ToDoListItem {...toDo} />
-                  </TouchableOpacity>
-                ))}
-            </View>
-          )}
-
-          {toDos.filter(toDo => getDayString(toDo.date + toDo.time) === "Today")
-            .length > 0 && (
-            <View>
-              <CategoryTitle>Hôm nay</CategoryTitle>
-              {toDos
-                .filter(toDo => getDayString(toDo.date + toDo.time) === "Today")
-                .map((toDo, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    activeOpacity={0.5}
-                    onPress={() => alert("xxxx")}>
-                    <ToDoListItem {...toDo} />
-                  </TouchableOpacity>
-                ))}
-            </View>
-          )}
-
-          {toDos.filter(
-            toDo => getDayString(toDo.date + toDo.time) === "Tomorrow",
-          ).length > 0 && (
-            <View>
-              <CategoryTitle>Ngày mai</CategoryTitle>
-              {toDos
-                .filter(
-                  toDo => getDayString(toDo.date + toDo.time) === "Tomorrow",
-                )
-                .map((toDo, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    activeOpacity={0.5}
-                    onPress={() => alert("xxxx")}>
-                    <ToDoListItem {...toDo} />
-                  </TouchableOpacity>
-                ))}
-            </View>
-          )}
-
-          {toDos.filter(
-            toDo =>
-              !["Outdated", "Yesterday", "Today", "Tomorrow"].includes(
-                getDayString(toDo.date + toDo.time),
+          {lstSchedule.map(
+            schedule =>
+              [].filter(
+                toDo => getDayString(toDo.date + toDo.time) === schedule.value,
+              ).length > 0 && (
+                <View>
+                  <CategoryTitle>{schedule.label}</CategoryTitle>
+                  {toDos
+                    .filter(
+                      toDo =>
+                        getDayString(toDo.date + toDo.time) === schedule.value,
+                    )
+                    .map(toDo => (
+                      <TouchableOpacity
+                        key={toDo.docPath}
+                        activeOpacity={0.5}
+                        onPress={() => {}}>
+                        <ToDoListItem {...toDo} />
+                      </TouchableOpacity>
+                    ))}
+                </View>
               ),
-          ).length > 0 && (
-            <View>
-              <CategoryTitle>Sắp diễn ra</CategoryTitle>
-              {toDos
-                .filter(
-                  toDo =>
-                    !["Outdated", "Yesterday", "Today", "Tomorrow"].includes(
-                      getDayString(toDo.date + toDo.time),
-                    ),
-                )
-                .map((toDo, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    activeOpacity={0.5}
-                    onPress={() => alert("xxxx")}>
-                    <ToDoListItem {...toDo} />
-                  </TouchableOpacity>
-                ))}
-            </View>
           )}
         </ScrollView>
       </Body>
@@ -195,12 +133,10 @@ function ToDoList({toDoList, toDos, actGetToDoList, actGetToDosByToDoListId}) {
 
 const mapStateToProps = state => ({
   toDoList: state.toDoList,
-  toDos: state.toDos,
 });
 
 const mapDispatchToProps = {
   actGetToDoList,
-  actGetToDosByToDoListId,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDoList);
