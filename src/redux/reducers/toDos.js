@@ -5,11 +5,11 @@
 /* eslint-disable no-undef */
 const initialState = [];
 
-const toDoList = (state = initialState, action) => {
+const toDos = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case "SET_TO_DO_LIST":
+        case "SET_TO_DOS":
             state = payload;
             return state;
 
@@ -18,4 +18,4 @@ const toDoList = (state = initialState, action) => {
     }
 };
 
-export default toDoList;
+export default toDos;
