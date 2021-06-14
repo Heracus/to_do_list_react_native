@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "9653437036",
+    "project_id": "heracus-to-do-list",
+    "storage_bucket": "heracus-to-do-list.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9653437036:android:d15ab5df0602517fcd4e49",
+        "android_client_info": {
+          "package_name": "com.to_do_list"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9653437036-lg3hs01qkvgr70110q9qqfdr3go1hhdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeZ-Hv4SqbE9Hkf3YGDbwNurIzSO9gI2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9653437036-lg3hs01qkvgr70110q9qqfdr3go1hhdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
